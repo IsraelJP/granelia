@@ -16,8 +16,9 @@ import jakarta.ws.rs.core.MediaType;
  * @author israel
  */
 @Path("users")
-public class userController {
+public class userController {                       
     
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public userDto crearUsuario(

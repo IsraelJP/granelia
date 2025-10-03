@@ -1,0 +1,5 @@
+com/granelia/JakartaRestConfiguration.class
+com/granelia/resources/productController.class
+com/granelia/dto/productDto.class
+com/granelia/resources/userController.class
+com/granelia/dto/userDto.class
