@@ -16,16 +16,27 @@ public class userDto {
     private String phone;
     private String nameCompany;
     private String contactName;
-    private String ok ;
+    private String token;
+    private String status;
 
-    public String getOk() {
-        return ok;  
+    public String getToken() {
+        return token;
     }
 
-    public void setOk(String ok) {
-        this.ok = ok;
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
     
+    
+     
     
     public String getUsername() {
         return username;

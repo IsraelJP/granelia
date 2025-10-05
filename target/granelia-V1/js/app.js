@@ -1,6 +1,6 @@
 console.log("El archivo app.js está cargado");
 
-const API_BASE = "http://localhost:8080/granelia/resources"; 
+const API_BASE = "https://8606b965018b.ngrok-free.app"; 
 
 document.getElementById("formUsuario")
   .addEventListener("submit", crearUsuarioPorQuery);
@@ -21,8 +21,7 @@ async function crearUsuarioPorQuery(e) {
     email: fd.get("email") || "",
     phone: fd.get("phone") || "",
     nameCompany: fd.get("nameCompany") || "",
-    contactName: fd.get("contactName") || "",
-    casa: "hola"
+    contactName: fd.get("contactName") || ""
   });
 
    const url = `${API_BASE}/users?${params.toString()}`;

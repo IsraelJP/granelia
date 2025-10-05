@@ -41,8 +41,8 @@ public class userController {
         usN.setPhone(phone);
         usN.setNameCompany(nameCompany);
         usN.setContactName(contactName);
-        usN.setOk("ok");
         create(usN);
+        
         return usN;
     }
     
