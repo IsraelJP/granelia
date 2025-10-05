@@ -5,3 +5,4 @@ com/granelia/dao/userDao.class
 com/granelia/dto/userDto.class
 com/granelia/dto/productDto.class
 com/granelia/resources/userController.class
+com/granelia/filters/CORSFilter.class

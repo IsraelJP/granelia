@@ -1,11 +1,12 @@
 
-
-const API_BASE = "https://israeljp-profile.com/granelia/";
+const API_BASE = "https://israeljp-profile.com/granelia/resources";
 console.log(API_BASE);
 
 
-document.getElementById("formUsuario")
-  .addEventListener("submit", crearUsuarioPorQuery);
+document.addEventListener("DOMContentLoaded", function() {
+  document.getElementById("formUsuario")
+    .addEventListener("submit", crearUsuarioPorQuery);
+});
 
 async function crearUsuarioPorQuery(e) {
   e.preventDefault();
