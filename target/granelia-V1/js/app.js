@@ -1,6 +1,8 @@
-console.log("El archivo app.js está cargado");
 
-const API_BASE = "https://israeljp-profile.com/granelia/"; 
+
+const API_BASE = "https://israeljp-profile.com/granelia/";
+console.log(API_BASE);
+
 
 document.getElementById("formUsuario")
   .addEventListener("submit", crearUsuarioPorQuery);
