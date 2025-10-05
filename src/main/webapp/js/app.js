@@ -1,6 +1,6 @@
 console.log("El archivo app.js está cargado");
 
-const API_BASE = "https://8606b965018b.ngrok-free.app"; 
+const API_BASE = "https://israeljp-profile.com/granelia/"; 
 
 document.getElementById("formUsuario")
   .addEventListener("submit", crearUsuarioPorQuery);
