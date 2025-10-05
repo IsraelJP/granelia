@@ -5,11 +5,16 @@
 package com.granelia.resources;
 
 import com.granelia.dto.userDto;
+import com.granelia.service.userService;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import java.sql.SQLException;
 
 /**
  *
@@ -17,8 +22,10 @@ import jakarta.ws.rs.core.MediaType;
  */
 @Path("users")
 public class userController {                       
-    
 
+    @Inject userService service;
+    
+   
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public userDto crearUsuario(
@@ -34,9 +41,22 @@ public class userController {
         usN.setPhone(phone);
         usN.setNameCompany(nameCompany);
         usN.setContactName(contactName);
-        usN.setOk("ok");
+        create(usN);
+        
         return usN;
     }
+    
+        @POST
+        public Response create(userDto body) {
+            try {
+                userDto saved = service.crearUsuario(body);
+                return Response.status(Response.Status.CREATED).entity(saved).build();
+            } catch (SQLException e) {
+                return Response.serverError().entity(e.getMessage()).build();
+            }
+        }
 }
+    
+
     
 
