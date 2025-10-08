@@ -33,7 +33,8 @@ public class userController {
             @QueryParam("email") String email,
             @QueryParam("phone") String phone,
             @QueryParam("nameCompany") String nameCompany,
-            @QueryParam("contactName") String contactName
+            @QueryParam("contactName") String contactName,
+            @QueryParam("contactName") String password
     ) {
         userDto usN = new userDto();
         usN.setUsername(username);
@@ -41,6 +42,9 @@ public class userController {
         usN.setPhone(phone);
         usN.setNameCompany(nameCompany);
         usN.setContactName(contactName);
+        usN.setStatus("Activo");
+        usN.setPassword(password);
+
         create(usN);
         
         return usN;
@@ -56,7 +60,3 @@ public class userController {
             }
         }
 }
-    
-
-    
-
