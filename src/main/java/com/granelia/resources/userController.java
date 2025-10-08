@@ -34,7 +34,7 @@ public class userController {
             @QueryParam("phone") String phone,
             @QueryParam("nameCompany") String nameCompany,
             @QueryParam("contactName") String contactName,
-            @QueryParam("contactName") String password
+            @QueryParam("password") String password
     ) {
         userDto usN = new userDto();
         usN.setUsername(username);

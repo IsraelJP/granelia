@@ -24,7 +24,8 @@ async function crearUsuarioPorQuery(e) {
     email: fd.get("email") || "",
     phone: fd.get("phone") || "",
     nameCompany: fd.get("nameCompany") || "",
-    contactName: fd.get("contactName") || ""
+    contactName: fd.get("contactName") || "",
+    password: fd.get("password")  || ""
   });
 
    const url = `${API_BASE}/users?${params.toString()}`;
