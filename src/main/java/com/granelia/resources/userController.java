@@ -50,6 +50,22 @@ public class userController {
         return usN;
     }
     
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public boolean login(
+            @QueryParam("username") String username,
+            @QueryParam("password") String password
+    ) {
+        userDto usN = new userDto();
+        usN.setUsername(username);
+        usN.setStatus("Activo");
+        usN.setPassword(password);
+
+        
+        return true;
+    }
+    
+    
         @POST
         public Response create(userDto body) {
             try {
