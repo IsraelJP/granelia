@@ -1,7 +1,0 @@
-com\granelia\service\userService.class
-com\granelia\dto\userDto.class
-com\granelia\JakartaRestConfiguration.class
-com\granelia\dao\userDao.class
-com\granelia\dto\productDto.class
-com\granelia\resources\productController.class
-com\granelia\resources\userController.class
