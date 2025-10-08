@@ -44,27 +44,11 @@ public class userController {
         usN.setContactName(contactName);
         usN.setStatus("Activo");
         usN.setPassword(password);
-
         create(usN);
-        
         return usN;
     }
     
-    @GET
-    @Path("/login")
-    @Produces(MediaType.APPLICATION_JSON)
-    public boolean login(
-            @QueryParam("username") String username,
-            @QueryParam("password") String password
-    ) {
-        userDto usN = new userDto();
-        usN.setUsername(username);
-        usN.setStatus("Activo");
-        usN.setPassword(password);
 
-        
-        return true;
-    }
     
     
         @POST
