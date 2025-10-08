@@ -1,0 +1,175 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 5 oct 2025, 10:14:35 p.m.
+    Author     : marva
+*/
+
+/* Estilos personalizados para Granelia Login */
+
+body {
+    background-color: #ffffff;
+}
+
+/* Header personalizado - Amarillo */
+.header-granelia {
+    background-color: #f4d84a;
+    padding: 20px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.logo {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+}
+
+.brand-name {
+    font-size: 32px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+/* Contenedor principal con espaciado */
+.main-container {
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+    padding: 50px 0;
+    background-color: #ffffff;
+}
+
+/* Imagen de cereales */
+.cereal-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.cereal-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 15px;
+}
+
+/* Card de login - Fondo gris claro */
+.card {
+    border: none;
+    border-radius: 12px;
+    background-color: #ececec;
+}
+
+.login-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+/* Estilos de inputs personalizados */
+.form-control {
+    padding: 12px 15px;
+    border-radius: 6px;
+    border: 1px solid #cccccc;
+    background-color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #999999;
+    box-shadow: none;
+    background-color: #ffffff;
+}
+
+.form-control::placeholder {
+    color: #999999;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 8px;
+}
+
+/* Botón de login personalizado - Azul */
+.btn-login {
+    background-color: #4a90e2;
+    border: none;
+    color: white;
+    font-weight: 600;
+    padding: 12px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.btn-login:hover {
+    background-color: #357abd;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+}
+
+.btn-login:active {
+    transform: translateY(0);
+}
+
+/* Enlace de registro */
+.register-link {
+    font-size: 14px;
+    color: #666666;
+}
+
+.register-link a {
+    color: #4a90e2;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.register-link a:hover {
+    color: #357abd;
+    text-decoration: underline;
+}
+
+/* Footer */
+footer {
+    background-color: #ffffff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+    .main-container {
+        padding: 30px 0;
+    }
+    
+    .cereal-image {
+        margin-bottom: 30px;
+    }
+    
+    .login-title {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 576px) {
+    .brand-name {
+        font-size: 26px;
+    }
+    
+    .logo {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .login-title {
+        font-size: 24px;
+    }
+}

@@ -1,0 +1,185 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 5 oct 2025, 10:49:14 p.m.
+    Author     : marva
+*/
+/* Estilos personalizados para Granelia Register */
+
+/* Estilos personalizados para Granelia Register */
+
+body {
+    background-color: #ffffff;
+}
+
+/* Header personalizado - Amarillo */
+.header-granelia {
+    background-color: #f4d84a;
+    padding: 20px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.logo {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+}
+
+.brand-name {
+    font-size: 32px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+/* Contenedor principal con espaciado */
+.main-container {
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+    padding: 50px 0;
+    background-color: #ffffff;
+}
+
+/* Card de registro - Fondo gris claro */
+.card {
+    border: none;
+    border-radius: 12px;
+    background-color: #ececec;
+}
+
+.register-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+/* Estilos de inputs y selects personalizados */
+.form-control,
+.form-select {
+    padding: 12px 15px;
+    border-radius: 6px;
+    border: 1px solid #cccccc;
+    background-color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #999999;
+    box-shadow: none;
+    background-color: #ffffff;
+}
+
+.form-control::placeholder {
+    color: #999999;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.text-danger {
+    color: #dc3545;
+}
+
+/* Select personalizado */
+.form-select {
+    color: #666666;
+    cursor: pointer;
+}
+
+.form-select option {
+    color: #333333;
+}
+
+/* Botón de registro personalizado - Amarillo */
+.btn-register {
+    background-color: #f4d84a;
+    border: none;
+    color: #2c3e50;
+    font-weight: 700;
+    padding: 14px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    text-transform: capitalize;
+}
+
+.btn-register:hover {
+    background-color: #e5c93a;
+    color: #1a252f;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(244, 216, 74, 0.4);
+}
+
+.btn-register:active {
+    transform: translateY(0);
+}
+
+/* Enlace de login */
+.login-link {
+    font-size: 14px;
+    color: #666666;
+}
+
+.login-link a {
+    color: #4a90e2;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.login-link a:hover {
+    color: #357abd;
+    text-decoration: underline;
+}
+
+/* Footer */
+footer {
+    background-color: #ffffff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .main-container {
+        padding: 30px 15px;
+    }
+    
+    .register-title {
+        font-size: 28px;
+    }
+    
+    .card-body {
+        padding: 30px 20px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .brand-name {
+        font-size: 26px;
+    }
+    
+    .logo {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .register-title {
+        font-size: 24px;
+    }
+    
+    .form-label {
+        font-size: 13px;
+    }
+}
