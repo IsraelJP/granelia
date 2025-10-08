@@ -51,6 +51,7 @@ public class userController {
     }
     
     @GET
+    @Path("/login")
     @Produces(MediaType.APPLICATION_JSON)
     public boolean login(
             @QueryParam("username") String username,
