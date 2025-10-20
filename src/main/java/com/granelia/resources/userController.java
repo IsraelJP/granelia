@@ -15,6 +15,7 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 /**
  *
@@ -60,4 +61,7 @@ public class userController {
                 return Response.serverError().entity(e.getMessage()).build();
             }
         }
+        
+
+        
 }
