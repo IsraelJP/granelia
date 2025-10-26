@@ -1,16 +1,13 @@
 /*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
-*/
-/* 
-    Created on : 5 oct 2025, 10:14:35 p.m.
-    Author     : marva
-*/
+ * Granelia - CSS General
+ * Archivo: css/login.css
+ * Estilos compartidos para Login y Register
+ */
 
-/* Estilos personalizados para Granelia Login */
-
+/* Reset y estilos base */
 body {
     background-color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
 /* Header personalizado - Amarillo */
@@ -48,7 +45,7 @@ body {
     background-color: #ffffff;
 }
 
-/* Imagen de cereales */
+/* Imagen de cereales (solo login) */
 .cereal-image {
     display: flex;
     justify-content: center;
@@ -63,21 +60,24 @@ body {
     border-radius: 15px;
 }
 
-/* Card de login - Fondo gris claro */
+/* Card general - Fondo gris claro */
 .card {
     border: none;
     border-radius: 12px;
     background-color: #ececec;
 }
 
-.login-title {
+/* Títulos de páginas */
+.login-title,
+.register-title {
     font-size: 32px;
     font-weight: bold;
     color: #2c3e50;
 }
 
-/* Estilos de inputs personalizados */
-.form-control {
+/* Estilos de inputs y selects personalizados */
+.form-control,
+.form-select {
     padding: 12px 15px;
     border-radius: 6px;
     border: 1px solid #cccccc;
@@ -85,7 +85,8 @@ body {
     transition: all 0.3s ease;
 }
 
-.form-control:focus {
+.form-control:focus,
+.form-select:focus {
     border-color: #999999;
     box-shadow: none;
     background-color: #ffffff;
@@ -99,6 +100,21 @@ body {
     font-weight: 600;
     color: #333333;
     margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.text-danger {
+    color: #dc3545;
+}
+
+/* Select personalizado */
+.form-select {
+    color: #666666;
+    cursor: pointer;
+}
+
+.form-select option {
+    color: #333333;
 }
 
 /* Botón de login personalizado - Azul */
@@ -122,20 +138,63 @@ body {
     transform: translateY(0);
 }
 
-/* Enlace de registro */
-.register-link {
+.btn-login:disabled {
+    background-color: #a0c4e8;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Mensajes de estado */
+#msg {
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+}
+
+#msg.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+#msg.ok {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+#msg.warn {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+#msg.err {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Enlaces de navegación entre páginas */
+.register-link,
+.login-link {
     font-size: 14px;
     color: #666666;
 }
 
-.register-link a {
+.register-link a,
+.login-link a {
     color: #4a90e2;
     text-decoration: none;
     font-weight: 600;
     transition: color 0.3s ease;
 }
 
-.register-link a:hover {
+.register-link a:hover,
+.login-link a:hover {
     color: #357abd;
     text-decoration: underline;
 }
@@ -150,13 +209,24 @@ footer {
     .main-container {
         padding: 30px 0;
     }
-    
+
     .cereal-image {
         margin-bottom: 30px;
     }
-    
-    .login-title {
+
+    .login-title,
+    .register-title {
         font-size: 28px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-container {
+        padding: 30px 15px;
+    }
+
+    .card-body {
+        padding: 30px 20px !important;
     }
 }
 
@@ -164,13 +234,19 @@ footer {
     .brand-name {
         font-size: 26px;
     }
-    
+
     .logo {
         width: 35px;
         height: 35px;
     }
-    
-    .login-title {
+
+    .login-title,
+    .register-title {
         font-size: 24px;
     }
+
+    .form-label {
+        font-size: 13px;
+    }
 }
+
