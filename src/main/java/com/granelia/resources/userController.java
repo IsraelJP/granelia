@@ -62,6 +62,27 @@ public class userController {
             }
         }
         
+        
+
+@GET
+@Path("login")
+@Produces(MediaType.APPLICATION_JSON)
+public Response findUser(@QueryParam("username") String username,
+                         @QueryParam("password") String password) {
+    int val;
+    try {
+        val = service.buscarUsuario(username, password);
+    } catch (SQLException e) {
+        return Response.serverError().entity(e.getMessage()).build();
+    }
+    if (val == 1) {
+        return Response.ok(1).build(); // 200 OK
+    } else {
+        return Response.status(Response.Status.UNAUTHORIZED).entity(0).build();
+    }
+}
+
+        
 
         
 }
