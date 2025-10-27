@@ -13,19 +13,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function buscarUsu(e) {
   e.preventDefault();
+
   const form = e.currentTarget || e.target.closest("form");
   const btn = form.querySelector("[type=submit]");
-  const msg = document.getElementById("msg");
+  const msg = document.getElementById("msg"); // opcional, para mensajes en UI
 
   // Helpers UI
   const setMsg = (text, type = "info") => {
     if (!msg) return;
     msg.textContent = text;
-    msg.style.display = "block";
     msg.className = "";            // limpia clases previas
-    msg.classList.add(type);       // ej. .info .ok .warn .err
+    msg.classList.add(type);       // ej. .info .ok .warn .err (defínelas en CSS)
   };
-
 
   if (!form) {
     console.warn("No se encontró el formulario");
@@ -100,11 +99,11 @@ async function buscarUsu(e) {
       return;
     }
 
-      // Éxito
+    // Éxito
     setMsg("Autenticado. Redirigiendo…", "ok");
+
     // TODO: ajusta la ruta de destino
     // window.location.href = "/granelia/panel.html";
-
   } catch (err) {
     console.error("Error en fetch:", err);
     setMsg("No se pudo conectar con el servidor. Revisa tu red o CORS.", "err");

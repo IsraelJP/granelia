@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/master
 com/granelia/JakartaRestConfiguration.class
 com/granelia/service/userService.class
 com/granelia/resources/productController.class
@@ -9,6 +12,7 @@ com/granelia/dto/userDto.class
 com/granelia/dto/productDto.class
 com/granelia/resources/userController.class
 com/granelia/filters/CORSFilter.class
+<<<<<<< HEAD
 >>>>>>> origin/master
 =======
 com\granelia\service\userService.class
@@ -20,3 +24,5 @@ com\granelia\filters\CORSFilter.class
 com\granelia\resources\productController.class
 com\granelia\resources\userController.class
 >>>>>>> Stashed changes
+=======
+>>>>>>> origin/master

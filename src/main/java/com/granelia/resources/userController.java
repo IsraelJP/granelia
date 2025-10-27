@@ -15,6 +15,7 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 /**
  *
@@ -34,7 +35,7 @@ public class userController {
             @QueryParam("phone") String phone,
             @QueryParam("nameCompany") String nameCompany,
             @QueryParam("contactName") String contactName,
-            @QueryParam("contactName") String password
+            @QueryParam("password") String password
     ) {
         userDto usN = new userDto();
         usN.setUsername(username);
@@ -44,11 +45,12 @@ public class userController {
         usN.setContactName(contactName);
         usN.setStatus("Activo");
         usN.setPassword(password);
-
         create(usN);
-        
         return usN;
     }
+    
+
+    
     
         @POST
         public Response create(userDto body) {
@@ -59,4 +61,7 @@ public class userController {
                 return Response.serverError().entity(e.getMessage()).build();
             }
         }
+        
+
+        
 }
