@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Reportes</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+  <style>
+    body{
+      min-height:100vh;
+      background:linear-gradient(to bottom,#fffbeb 0%,#ffffff 60%,#ffffff 100%);
+    }
+    .brand-title{color:#be123c;font-weight:800;}      /* rose-700 */
+    .card-soft{
+      border:1px solid #fcd34d55; /* amber-200-ish */
+      border-radius:1rem;
+      box-shadow:0 .5rem 1rem rgba(0,0,0,.08);
+    }
+    .card-soft-rose{ border:1px solid #fecdd3aa; }    /* rose-200-ish */
+    .kpi-title{font-size:.85rem;color:#6b7280;margin:0;}
+    .kpi-value{font-size:1.85rem;font-weight:800;color:#111827;margin:0.25rem 0 0;}
+    .kpi-sub{font-size:.75rem;color:#6b7280;margin:0.25rem 0 0;}
+    /* SVGs responsive */
+    .chart{width:100%; height:320px;}
+    .legend-dot{display:inline-block;width:.75rem;height:.75rem;border-radius:9999px;margin-right:.5rem;vertical-align:middle}
+  </style>
+</head>
+<body class="py-4">
+  <main class="container" style="max-width:1200px;">
+    <!-- Título -->
+    <div class="mb-4">
+      <h1 class="brand-title h2 mb-1">Reportes</h1>
+      <p class="text-muted">Resumen de ventas, ingresos y cancelaciones</p>
+    </div>
+
+    <!-- KPIs -->
+    <div class="row g-3 mb-4">
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card card-soft p-3 h-100">
+          <p class="kpi-title">Ventas</p>
+          <p id="kpi-ventas" class="kpi-value">—</p>
+          <p class="kpi-sub">Último periodo</p>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card card-soft p-3 h-100">
+          <p class="kpi-title">Ingresos</p>
+          <p id="kpi-ingresos" class="kpi-value">—</p>
+          <p class="kpi-sub">Total bruto</p>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card card-soft p-3 h-100">
+          <p class="kpi-title">Tasa de cancelación</p>
+          <p id="kpi-cancel" class="kpi-value">—</p>
+          <p class="kpi-sub">Canc./Ventas</p>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card card-soft p-3 h-100">
+          <p class="kpi-title">Ticket promedio</p>
+          <p id="kpi-ticket" class="kpi-value">—</p>
+          <p class="kpi-sub">Ingresos/Venta</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gráficas -->
+    <div class="row g-4">
+      <!-- Línea (2 series) -->
+      <div class="col-12 col-lg-8">
+        <div class="card card-soft p-3 h-100">
+          <h3 class="h6 mb-1">Tendencia semanal</h3>
+          <p class="text-muted small mb-3">Ventas e ingresos por día</p>
+          <svg id="lineChart" class="chart" viewBox="0 0 900 300" role="img" aria-label="Tendencia semanal"></svg>
+          <div class="mt-2 small text-muted">
+            <span class="legend-dot" style="background:#f59e0b"></span>Ventas
+            <span class="ms-3 legend-dot" style="background:#fb7185"></span>Ingresos
+          </div>
+        </div>
+      </div>
+
+      <!-- Barras -->
+      <div class="col-12 col-lg-4">
+        <div class="card card-soft-rose p-3 h-100">
+          <h3 class="h6 mb-1">Cancelaciones por motivo</h3>
+          <p class="text-muted small mb-3">Distribución por categoría</p>
+          <svg id="barChart" class="chart" viewBox="0 0 500 300" role="img" aria-label="Cancelaciones por motivo"></svg>
+        </div>
+      </div>
+
+      <!-- Dona -->
+      <div class="col-12 col-lg-4">
+        <div class="card card-soft p-3 h-100">
+          <h3 class="h6 mb-1">Métodos de pago</h3>
+          <p class="text-muted small mb-3">Porcentaje de uso</p>
+          <svg id="donutChart" class="chart" viewBox="0 0 500 300" role="img" aria-label="Métodos de pago"></svg>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    /* ===================== Datos (mismos que tu componente) ===================== */
+    const dataVentas = [
+      { fecha: 'Lun', ventas: 24, ingresos: 3200 },
+      { fecha: 'Mar', ventas: 31, ingresos: 4100 },
+      { fecha: 'Mié', ventas: 18, ingresos: 2300 },
+      { fecha: 'Jue', ventas: 35, ingresos: 4700 },
+      { fecha: 'Vie', ventas: 44, ingresos: 5900 },
+      { fecha: 'Sáb', ventas: 28, ingresos: 3600 },
+      { fecha: 'Dom', ventas: 22, ingresos: 2900 },
+    ];
+    const dataCancelaciones = [
+      { motivo: 'Error en pedido', cantidad: 8 },
+      { motivo: 'Cliente lo solicitó', cantidad: 12 },
+      { motivo: 'Pago no confirmado', cantidad: 5 },
+      { motivo: 'Stock insuficiente', cantidad: 7 },
+    ];
+    const dataMetodosPago = [
+      { metodo: 'Tarjeta', porcentaje: 52 },
+      { metodo: 'Transferencia', porcentaje: 28 },
+      { metodo: 'Efectivo', porcentaje: 14 },
+      { metodo: 'Otros', porcentaje: 6 },
+    ];
+
+    /* ===================== KPIs ===================== */
+    (function renderKPIs(){
+      const totalVentas = dataVentas.reduce((a,d)=>a+d.ventas,0);
+      const totalIngresos = dataVentas.reduce((a,d)=>a+d.ingresos,0);
+      const cancels = dataCancelaciones.reduce((a,d)=>a+d.cantidad,0);
+      const tasa = totalVentas===0?0:(cancels/totalVentas)*100;
+      const ticket = totalVentas===0?0:totalIngresos/totalVentas;
+
+      const fmtInt = n => n.toLocaleString('es-MX');
+      const fmtMoney = n => '$ ' + n.toLocaleString('es-MX', {maximumFractionDigits:0});
+      const fmtPct = n => n.toFixed(1) + '%';
+      const fmtTicket = n => '$ ' + n.toFixed(2);
+
+      document.getElementById('kpi-ventas').textContent = fmtInt(totalVentas);
+      document.getElementById('kpi-ingresos').textContent = fmtMoney(totalIngresos);
+      document.getElementById('kpi-cancel').textContent = fmtPct(tasa);
+      document.getElementById('kpi-ticket').textContent = fmtTicket(ticket);
+    })();
+
+    /* ===================== Utilidades SVG ===================== */
+    const create = (tag, attrs={})=>{
+      const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+      for(const k in attrs) el.setAttribute(k, attrs[k]);
+      return el;
+    };
+
+    /* ===================== Línea múltiple ===================== */
+    (function lineChart(){
+      const svg = document.getElementById('lineChart');
+      const width = 900, height = 300;
+      const pad = {top:20,right:20,bottom:30,left:40};
+      const innerW = width - pad.left - pad.right;
+      const innerH = height - pad.top - pad.bottom;
+
+      const xLabels = dataVentas.map(d=>d.fecha);
+      const series = [
+        { name:'ventas', values:dataVentas.map(d=>d.ventas), stroke:'#f59e0b' },
+        { name:'ingresos', values:dataVentas.map(d=>d.ingresos), stroke:'#fb7185' },
+      ];
+      const allVals = series.flatMap(s=>s.values);
+      const yMax = Math.max(1, ...allVals);
+      const xStep = innerW / Math.max(1, xLabels.length-1);
+      const yScale = v => innerH - (v / yMax) * innerH;
+
+      const g = create('g',{transform:`translate(${pad.left},${pad.top})`});
+      svg.appendChild(g);
+
+      // grid
+      const gridY=4;
+      for(let i=0;i<=gridY;i++){
+        const y = Math.round(i*innerH/gridY);
+        g.appendChild(create('line',{x1:0,x2:innerW,y1:y,y2:y,stroke:'#e5e7eb','stroke-dasharray':'4 4'}));
+        const val = Math.round((gridY-i)*yMax/gridY);
+        g.appendChild(create('text',{x:-8,y:y,fill:'#6b7280','font-size':'12','text-anchor':'end',dy:'.32em'})).textContent = val;
+      }
+      // x labels
+      xLabels.forEach((lab,i)=>{
+        g.appendChild(create('text',{x:i*xStep,y:innerH+18,fill:'#6b7280','font-size':'12','text-anchor':'middle'})).textContent = lab;
+      });
+
+      // paths + points
+      series.forEach(s=>{
+        const d = s.values.map((v,i)=>`${i===0?'M':'L'} ${i*xStep} ${yScale(v)}`).join(' ');
+        g.appendChild(create('path',{d,fill:'none',stroke:s.stroke,'stroke-width':2}));
+        s.values.forEach((v,i)=>{
+          const c = create('circle',{cx:i*xStep,cy:yScale(v),r:3,fill:'#fff',stroke:s.stroke,'stroke-width':2});
+          c.appendChild(create('title')).textContent = `${xLabels[i]} • ${s.name}: ${v}`;
+          g.appendChild(c);
+        });
+      });
+    })();
+
+    /* ===================== Barras ===================== */
+    (function barChart(){
+      const svg = document.getElementById('barChart');
+      const width = 500, height = 300;
+      const pad = {top:20,right:20,bottom:40,left:40};
+      const innerW = width - pad.left - pad.right;
+      const innerH = height - pad.top - pad.bottom;
+
+      const data = dataCancelaciones.map(d=>({label:d.motivo, value:d.cantidad}));
+      const maxV = Math.max(1, ...data.map(d=>d.value));
+      const slot = innerW / data.length;
+      const barW = slot * 0.6;
+      const gap = slot * 0.4;
+      const yScale = v => innerH - (v/maxV)*innerH;
+
+      const g = create('g',{transform:`translate(${pad.left},${pad.top})`});
+      svg.appendChild(g);
+
+      // bars + labels
+      data.forEach((d,i)=>{
+        const x = i*(barW+gap);
+        const y = yScale(d.value);
+        const rect = create('rect',{x, y, width:barW, height:innerH-y, rx:6, ry:6, fill:'#fb7185'});
+        rect.appendChild(create('title')).textContent = `${d.label}: ${d.value}`;
+        g.appendChild(rect);
+
+        g.appendChild(create('text',{x:x+barW/2,y:y-6,'text-anchor':'middle','font-size':'12',fill:'#6b7280'})).textContent=d.value;
+        g.appendChild(create('text',{x:x+barW/2,y:innerH+18,'text-anchor':'middle','font-size':'12',fill:'#6b7280'})).textContent=d.label;
+      });
+    })();
+
+    /* ===================== Dona ===================== */
+    (function donutChart(){
+      const svg = document.getElementById('donutChart');
+      const width = 500, height = 300;
+      const cx = width/2, cy = height/2+5;
+      const outerR = Math.min(width,height)*0.28;
+      const innerR = outerR*0.55;
+      const colors = ['#fb7185','#f59e0b','#60a5fa','#34d399'];
+      const data = dataMetodosPago.map(d=>({label:d.metodo, value:d.porcentaje}));
+      const total = Math.max(1, data.reduce((a,d)=>a+d.value,0));
+
+      let start = -Math.PI/2;
+      data.forEach((d,i)=>{
+        const angle = (d.value/total)*Math.PI*2;
+        const end = start + angle;
+
+        const pathD = describeRingSegment(cx,cy,outerR,innerR,start,end);
+        const path = create('path',{d:pathD, fill:colors[i%colors.length]});
+        path.appendChild(create('title')).textContent = `${d.label}: ${((d.value/total)*100).toFixed(1)}%`;
+        svg.appendChild(path);
+        start = end;
+      });
+
+      // center hole
+      svg.appendChild(create('circle',{cx,cy,r:innerR-1,fill:'#fff'}));
+
+      // legends (simple)
+      const legendG = create('g',{transform:`translate(${cx-100}, ${height-30})`});
+      svg.appendChild(legendG);
+      data.forEach((d,i)=>{
+        const g = create('g',{transform:`translate(${(i%2)*100}, ${Math.floor(i/2)*18})`});
+        g.appendChild(create('rect',{width:10,height:10,rx:2,ry:2,fill:colors[i%colors.length]}));
+        const t = create('text',{x:16,y:10,'font-size':'12',fill:'#374151'});
+        t.textContent = d.label;
+        g.appendChild(t);
+        legendG.appendChild(g);
+      });
+
+      function polar(cx,cy,r,a){ return {x: cx + r*Math.cos(a), y: cy + r*Math.sin(a)}; }
+      function describeRingSegment(cx,cy,R,r,a0,a1){
+        const laf = (a1-a0)<=Math.PI ? 0 : 1;
+        const p1 = polar(cx,cy,R,a0), p2 = polar(cx,cy,R,a1);
+        const p3 = polar(cx,cy,r,a1), p4 = polar(cx,cy,r,a0);
+        return [
+          `M ${p1.x} ${p1.y}`,
+          `A ${R} ${R} 0 ${laf} 1 ${p2.x} ${p2.y}`,
+          `L ${p3.x} ${p3.y}`,
+          `A ${r} ${r} 0 ${laf} 0 ${p4.x} ${p4.y}`,
+          'Z'
+        ].join(' ');
+      }
+    })();
+  </script>
+</body>
+</html>

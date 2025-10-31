@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="css/login.css" />
   
   <!-- Iconos opcionales (Bootstrap Icons) -->
-  <link rel="stylesheet"
+  <lin  k rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"/>
 </head>
 <body>
@@ -47,45 +47,36 @@
               
              
               
-              <form id="formLogin" th:action="@{/login}" th:method="post">
-                
-                
-                <input type="hidden" th:if="${_csrf != null}"
-                       th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+              <form id="formLogin" action="panel.xhtml" method="get">
+                  <div class="mb-3">
+                      <label for="username" class="form-label">Usuario</label>
+                      <input 
+                          type="text" 
+                          class="form-control" 
+                          id="username" 
+                          name="username" 
+                          placeholder="Usuario"
+                          required />
+                  </div>
 
-              <!-- Mensaje de estado (inicialmente oculto) -->
-              <div id="msg" style="display: none;"></div>
+                  <div class="mb-3">
+                      <label for="password" class="form-label">Contraseña</label>
+                      <input 
+                          type="password" 
+                          class="form-control" 
+                          id="password" 
+                          name="password" 
+                          placeholder="••••••••••••••••"
+                          required />
+                  </div>
 
-              <form id="formLogin">
-
-                <div class="mb-3">
-                  <label for="username" class="form-label">Usuario</label>
-                  <input 
-                    type="text" 
-                    class="form-control" 
-                    id="username" 
-                    name="username" 
-                    placeholder="Usuario"
-                    required />
-                </div>
-
-                <div class="mb-3">
-                  <label for="password" class="form-label">Contraseña</label>
-                  <input 
-                    type="password" 
-                    class="form-control" 
-                    id="password" 
-                    name="password" 
-                    placeholder="••••••••••••••••"
-                    required />
-                </div>
-                <!-- Botón de Iniciar Sesión -->
-                <div class="d-grid mb-3">
-                    <button type="submit" class="btn btn-login btn-lg" id="boton_panle">
-                    Iniciar Sesion
-                  </button>
-                </div>
+                  <div class="d-grid mb-3">
+                      <button type="submit" class="btn btn-login btn-lg" id="boton_panle">
+                          Iniciar Sesión
+                      </button>
+                  </div>
               </form>
+
               <!-- Enlace de registro -->
               <p class="register-link text-center mb-0">
                 ¿No tienes una cuenta? 
