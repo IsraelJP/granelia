@@ -20,23 +20,6 @@ import jakarta.ws.rs.core.MediaType;
 @Path("products")
 public class productController {
     
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public productDto crearProducto(
-            @QueryParam("idProduct") String idProduct,
-            @QueryParam("nameProduct") String nameProduct,
-            @QueryParam("price") String price,
-            @QueryParam("typeProduct") String typeProduct,
-            @QueryParam("expDate") String expDate
-    ){
-     productDto prN = new productDto();
-     prN.setIdProduct(idProduct);
-     prN.setNameProduct(nameProduct);
-     prN.setPrice(price);
-     prN.setTypeProduct(typeProduct);
-     prN.setExpDate(expDate);
-     prN.setOk("ok");
-     return prN;
-    }
+   
     
 }

@@ -32,11 +32,18 @@
                     <label>Contraseña</label>
                     <h:inputSecret value="#{controladorLogin.password}" styleClass="form-control" />
                 </div>
-
-                <h:commandButton value="Continuar" styleClass="btn btn-primary" action="#{controladorLogin.login()}" />
-                 
+                <div class=" d-flex">
+                <h:commandButton value="Continuar" class="btn btn-primary me-3" action="#{controladorLogin.login()}" />
+                <h:commandButton value="Registro" action="register?faces-redirect=true " class=" btn btn-primary"/>
+                 </div>
+                
+                 <h:messages id="msgs" globalOnly="true" class="mt-3 text-danger"/>
             </h:form>
-            <h:messages id="msgs" globalOnly="true" class="mt-3 text-danger"/>
+            
+           
+            
+           
+    
         </div>
         </main>
         <footer class="d-flex justify-content-center ">Proyecto Programacion Web</footer>

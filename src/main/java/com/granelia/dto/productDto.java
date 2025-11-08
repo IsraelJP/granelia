@@ -9,65 +9,82 @@ package com.granelia.dto;
  * @author israel
  */
 public class productDto {
+      
+    private int id_producto;
+    private String nombre;
+    private String marca;
+    private String categoria;
+    private int peso_gramos;
+    private double precio;
+    private double precio_iva;
+    private int stock;
 
-    private String idProduct;
-    private String nameProduct;
-    private String price;
-    private String typeProduct;
-    private String expDate;
-    private String ok ;
-
-    public String getOk() {
-        return ok;
+    public int getId_producto() {
+        return id_producto;
     }
 
-    public void setOk(String ok) {
-        this.ok = ok;
+    public void setId_producto(int id_producto) {
+        this.id_producto = id_producto;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public int getPeso_gramos() {
+        return peso_gramos;
+    }
+
+    public void setPeso_gramos(int peso_gramos) {
+        this.peso_gramos = peso_gramos;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public double getPrecio_iva() {
+        return precio_iva;
+    }
+
+    public void setPrecio_iva(double precio_iva) {
+        this.precio_iva = precio_iva;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
     
-
-    public String getIdProduct() {
-        return idProduct;
-    }
-
-    public void setIdProduct(String idProduct) {
-        this.idProduct = idProduct;
-    }
-
-    public String getNameProduct() {
-        return nameProduct;
-    }
-
-    public void setNameProduct(String nameProduct) {
-        this.nameProduct = nameProduct;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public String getTypeProduct() {
-        return typeProduct;
-    }
-
-    public void setTypeProduct(String typeProduct) {
-        this.typeProduct = typeProduct;
-    }
-
-    public String getExpDate() {
-        return expDate;
-    }
-
-    public void setExpDate(String expDate) {
-        this.expDate = expDate;
-    }
     
     
-
     
     
 }

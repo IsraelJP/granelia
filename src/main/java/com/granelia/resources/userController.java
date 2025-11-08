@@ -3,8 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.granelia.resources;
-
-import com.granelia.dto.userDto;
 import com.granelia.service.userService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
@@ -27,7 +25,7 @@ public class userController {
     @Inject userService service;
     
    
-    @GET
+ /**   @GET
     @Produces(MediaType.APPLICATION_JSON)
     public userDto crearUsuario(
             @QueryParam("username") String username,
@@ -61,7 +59,7 @@ public class userController {
                 return Response.serverError().entity(e.getMessage()).build();
             }
         }
-        
+   **/     
         
 
 @GET

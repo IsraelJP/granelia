@@ -1,0 +1,63 @@
+
+/* Tarjeta del formulario */
+#form-register {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  width: 100%;
+  max-width: 380px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#form-register:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+/* Título */
+#form-register h2 {
+  color: rgb(153,102,153);
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+/* Inputs */
+#form-register .form-control {
+  border: 2px solid #e3d8e3;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#form-register .form-control:focus {
+  border-color: rgb(153,102,153);
+  box-shadow: 0 0 0 0.2rem rgba(153,102,153,0.25);
+}
+
+/* Botón */
+#form-register .btn-register {
+  background-color: rgb(153,102,153);
+  color: white;
+  font-weight: 600;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  border: none;
+  padding: 0.75rem;
+}
+
+#form-register .btn-register:hover {
+  background-color: #FFD34D;
+  color: #333;
+  transform: scale(1.03);
+}
+
+/* Texto auxiliar */
+#form-register .text-muted {
+  text-align: center;
+  display: block;
+  margin-top: 1rem;
+  color: #777;
+  font-size: 0.9rem;
+}

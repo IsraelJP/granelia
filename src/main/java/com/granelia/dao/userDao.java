@@ -1,14 +1,13 @@
 package com.granelia.dao;
 
+import beans.registerBean;
 import com.granelia.dto.userDto;
 import jakarta.annotation.Resource;
 import jakarta.transaction.Transactional;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+
 
 public class userDao {
 
