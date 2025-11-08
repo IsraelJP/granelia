@@ -1,0 +1,38 @@
+:root {
+    --bs-primary: #00897B; /* verde azulado elegante */
+    --bs-secondary: #FFD54F;
+    --bs-danger: #E53935;
+}
+
+header {
+    color: black;
+    font-weight: bold;
+    padding: 1rem;
+    font-size: 1.8rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,.3);
+    background-color: rgb(255, 211, 77);
+}
+
+footer{
+    color: black;
+    font-weight: bold;
+    padding: 1rem;
+    font-size: 1.8rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,.3);
+    background-color: rgb(255, 211, 77);
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* que ocupe todo el alto de la pantalla */
+}
+
+main {
+    flex: 1; /* el contenido se expande y empuja el footer hacia abajo */
+}
