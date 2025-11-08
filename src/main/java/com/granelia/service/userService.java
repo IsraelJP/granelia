@@ -14,6 +14,6 @@ public class userService {
     @Inject userDao dao;
     
     public userDto crearUsuario(userDto in) throws SQLException { return dao.insert(in); }
-    public boolean buscarUsuario(String username, String password) throws SQLException {return dao.buscar(username, password);}
+    public int buscarUsuario(String username, String password) throws SQLException {return dao.buscar(username, password);}
 
 }

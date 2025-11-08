@@ -6,7 +6,9 @@ import jakarta.transaction.Transactional;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class userDao {
 
@@ -47,10 +49,10 @@ public class userDao {
         return in;
     }
     
-    public boolean buscar(String username , String password) throws SQLException {
+    public int  buscar(String username , String password) throws SQLException {
         String username1 = username;
         String password1 = password;
-        if (username1 == null || password1 == null) return false;
+        if (username1 == null || password1 == null) return 0;
 
         final String sql =
             "SELECT 1 FROM public.users WHERE username = ? AND password = ? LIMIT 1";
@@ -62,9 +64,15 @@ public class userDao {
             ps.setString(2, password);
 
             try (ResultSet rs = ps.executeQuery()) {
-                return rs.next(); // true si encontró coincidencia
+                if (rs.next()) {
+                    return 1;
+                }else{
+                    return 0;
+                }
+                
             }
         }
     }
+    
 
 }
