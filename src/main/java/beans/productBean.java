@@ -26,6 +26,7 @@ public class productBean implements Serializable {
 
     @Inject
     productService ser;
+    
     private List<productDto> list = new ArrayList<>();
     private productDto productoActual = new productDto();
     private String terminoBusqueda;

@@ -7,8 +7,8 @@
 /home/israel/NetBeansProjects/granelia/src/main/java/com/granelia/JakartaRestConfiguration.java
 /home/israel/NetBeansProjects/granelia/src/main/java/com/granelia/dao/userDao.java
 /home/israel/NetBeansProjects/granelia/src/main/java/com/granelia/service/productService.java
-/home/israel/NetBeansProjects/granelia/src/main/java/com/granelia/dto/productDto.java
 /home/israel/NetBeansProjects/granelia/src/main/java/com/granelia/dto/User.java
+/home/israel/NetBeansProjects/granelia/src/main/java/com/granelia/dto/productDto.java
 /home/israel/NetBeansProjects/granelia/src/main/java/beans/userBean.java
 /home/israel/NetBeansProjects/granelia/src/main/java/com/granelia/filters/CORSFilter.java
 /home/israel/NetBeansProjects/granelia/src/main/java/com/granelia/dto/userDto.java

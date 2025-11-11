@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 @ApplicationScoped
 public class ApiService {
 
-    private static final String URL_SERVICIO = "https://jsonplaceholder.typicode.com";
+    private static final String URL_SERVICIO = "https://postmaxillary-unsophistically-ara.ngrok-free.dev/erp1/resources/";
     private Client client;
     
     @PostConstruct
@@ -56,5 +56,16 @@ public class ApiService {
             throw new RuntimeException("No se pudo contactar el API externo: " + ex.getMessage(), ex);
         }
     }
+        public String prueba1(){
+        try{
+            Response r = client.target(URL_SERVICIO)
+                    .path("/prueba")
+                    .request(MediaType.APPLICATION_JSON)
+                    .get();
+           return r.readEntity(String.class);
+        }catch(ProcessingException ex){
+           return "false";
+        }
+        }
 
 }

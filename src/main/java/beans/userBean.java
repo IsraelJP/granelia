@@ -27,10 +27,20 @@ public class userBean implements Serializable {
     @Inject
     private ApiService api;
     private List<User> usuarios = new ArrayList<>();
+    private String prueba;
 
+    public String getPrueba() {
+        return prueba;
+    }
+
+    public void setPrueba(String prueba) {
+        this.prueba = prueba;
+    }
+    
     public void cargar() {
         try {
-            usuarios = api.listUsers();
+          //  usuarios = api.listUsers();
+            prueba = api.prueba1();
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuarios cargados", null));
         } catch (Exception e) {
