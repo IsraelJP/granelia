@@ -18,6 +18,16 @@ public class productDto {
     private double precio;
     private double precio_iva;
     private int stock;
+    private String desc;
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+    
 
     public int getId_producto() {
         return id_producto;

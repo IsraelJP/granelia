@@ -6,7 +6,9 @@
 /home/israel/NetBeansProjects/granelia/src/main/java/beans/loginBean.java
 /home/israel/NetBeansProjects/granelia/src/main/java/com/granelia/JakartaRestConfiguration.java
 /home/israel/NetBeansProjects/granelia/src/main/java/com/granelia/dao/userDao.java
+/home/israel/NetBeansProjects/granelia/src/main/java/com/granelia/dto/ventaDto.java
 /home/israel/NetBeansProjects/granelia/src/main/java/com/granelia/service/productService.java
+/home/israel/NetBeansProjects/granelia/src/main/java/com/granelia/service/ventaService.java
 /home/israel/NetBeansProjects/granelia/src/main/java/com/granelia/dto/User.java
 /home/israel/NetBeansProjects/granelia/src/main/java/com/granelia/dto/productDto.java
 /home/israel/NetBeansProjects/granelia/src/main/java/beans/userBean.java
