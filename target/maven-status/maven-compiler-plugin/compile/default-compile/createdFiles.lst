@@ -2,8 +2,10 @@ com/granelia/dto/userDto.class
 beans/userBean.class
 com/granelia/service/ApiService.class
 com/granelia/dto/productDto.class
+com/granelia/dto/ventaDto.class
 com/granelia/resources/userController.class
 com/granelia/service/productService.class
+com/granelia/service/ventaService.class
 com/granelia/dao/productDao.class
 com/granelia/JakartaRestConfiguration.class
 com/granelia/service/userService.class
@@ -13,5 +15,6 @@ beans/loginBean.class
 com/granelia/service/ApiService$1.class
 beans/productBean.class
 com/granelia/dto/User.class
+com/granelia/dto/ventaDto$Item.class
 com/granelia/filters/CORSFilter.class
 beans/registerBean.class
