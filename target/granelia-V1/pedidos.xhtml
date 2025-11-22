@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets">
+
+    <h:head>
+        <title>Panel de Pedidos</title>
+
+        <!-- Bootstrap -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- CSS global -->
+        <h:outputStylesheet name="global.css"/>
+        <!-- CSS específico de pedidos -->
+        <h:outputStylesheet name="pedidos.css"/>
+    </h:head>
+
+    <h:body styleClass="pedidos-page">
+
+        <div class="container py-4">
+            <!-- Título -->
+            <div class="row mb-4">
+                <div class="col text-center">
+                    <h2 class="titulo-pedidos">Pedidos</h2>
+                    <p class="subtitulo-pedidos">
+                        Aquí se muestran los pedidos que llegan desde otras páginas o módulos
+                    </p>
+                </div>
+            </div>
+
+            <!-- Resumen de estados -->
+            <div class="row g-3 justify-content-center mb-4">
+                <div class="col-12 col-md-4">
+                    <div class="card pedido-card shadow-sm">
+                        <div class="card-body text-center">
+                            <h6 class="text-muted mb-1">Pendientes</h6>
+                            <h3 class="fw-bold text-warning">
+                                {pedidosController.totalPendientes}
+                            </h3>
+                            <small class="text-muted">Aún no procesados</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="card pedido-card shadow-sm">
+                        <div class="card-body text-center">
+                            <h6 class="text-muted mb-1">En proceso</h6>
+                            <h3 class="fw-bold text-info">
+                                {pedidosController.totalEnProceso}
+                            </h3>
+                            <small class="text-muted">Preparándose / en camino</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="card pedido-card shadow-sm">
+                        <div class="card-body text-center">
+                            <h6 class="text-muted mb-1">Completados</h6>
+                            <h3 class="fw-bold text-success">
+                                {pedidosController.totalCompletados}
+                            </h3>
+                            <small class="text-muted">Entregados correctamente</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filtros rápidos (opcional) -->
+            <div class="row mb-3 justify-content-between align-items-center">
+                <div class="col-12 col-md-6 mb-2 mb-md-0">
+                    <div class="input-group filtro-busqueda">
+                        <span class="input-group-text">Buscar</span>
+                        <h:inputText styleClass="form-control"
+                                     value="{pedidosController.filtro}"
+                                     />
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4 text-md-end">
+                    <h:commandButton value="Aplicar filtros"
+                                     action="{pedidosController.aplicarFiltros}"
+                                     styleClass="btn btn-primary btn-sm me-2"/>
+                    <h:commandButton value="Limpiar"
+                                     action="{pedidosController.limpiarFiltros}"
+                                     styleClass="btn btn-outline-secondary btn-sm"/>
+                </div>
+            </div>
+
+            <!-- Tabla de pedidos -->
+            <div class="card shadow tabla-pedidos-card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Listado de Pedidos</h5>
+                    <small class="text-muted">
+                        Total: {pedidosController.listaPedidos.size()}
+                    </small>
+                </div>
+
+                <div class="card-body p-0">
+                    <table class="table table-hover tabla-pedidos mb-0">
+                        <thead>
+                            <tr>
+                                <th>Folio</th>
+                                <th>Fecha</th>
+                                <th>Cliente</th>
+                                <th>Origen</th>
+                                <th>Estado</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ui:repeat value="{pedidosController.listaPedidos}" var="p">
+                                <tr>
+                                    <td>{p.folio}</td>
+                                    <td>{p.fecha}</td>
+                                    <td>{p.cliente}</td>
+                                    <td>{p.origen}</td>
+                                    <td>
+                                        <span class="badge {p.estadoCss}">
+                                            {p.estadoTexto}
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <h:commandButton value="Ver"
+                                                         styleClass="btn btn-sm btn-outline-primary me-1"
+                                                         action="{pedidosController.verPedido(p)}"/>
+                                        <h:commandButton value="Procesar"
+                                                         styleClass="btn btn-sm btn-outline-success me-1"
+                                                         action="{pedidosController.procesarPedido(p)}"/>
+                                        <h:commandButton value="Cancelar"
+                                                         styleClass="btn btn-sm btn-outline-danger"
+                                                         action="{pedidosController.cancelarPedido(p)}"/>
+                                    </td>
+                                </tr>
+                            </ui:repeat>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </h:body>
+</html>

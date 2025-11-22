@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets">
+
+    <h:head>
+        <title>Cancelaciones</title>
+
+        <!-- Bootstrap -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- CSS global -->
+        <h:outputStylesheet name="global.css"/>
+
+        <!-- CSS exclusivo de cancelaciones -->
+        <h:outputStylesheet name="cancelaciones.css"/>
+    </h:head>
+
+    <h:body styleClass="cancelaciones-page">
+
+        <div class="container py-4">
+
+            <!-- Encabezado -->
+            <div class="row mb-4">
+                <div class="col text-center">
+                    <h2 class="titulo-cancelaciones">Cancelaciones</h2>
+                    <p class="subtitulo-cancelaciones">
+                        Aquí se registran pedidos cancelados junto con su motivo y acciones realizadas
+                    </p>
+                </div>
+            </div>
+
+            <!-- Resumen general -->
+            <div class="row g-3 justify-content-center mb-4">
+
+                <div class="col-12 col-md-4">
+                    <div class="card metric-card shadow-sm">
+                        <div class="card-body text-center">
+                            <h6 class="text-muted mb-1">Total Cancelados</h6>
+                            <h3 class="fw-bold text-danger">
+                                #{cancelacionesController.totalCancelados}
+                            </h3>
+                            <small class="text-muted">Número total del mes</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="card metric-card shadow-sm">
+                        <div class="card-body text-center">
+                            <h6 class="text-muted mb-1">En supervisión</h6>
+                            <h3 class="fw-bold text-warning">
+                                #{cancelacionesController.totalSupervision}
+                            </h3>
+                            <small class="text-muted">Aún revisándose</small>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Filtro de búsqueda -->
+            <div class="row mb-3 justify-content-between align-items-center">
+
+                <div class="col-12 col-md-6 mb-2 mb-md-0">
+                    <div class="input-group filtro-busqueda">
+                        <span class="input-group-text">Buscar</span>
+                        <h:inputText styleClass="form-control"
+                                     value="#{cancelacionesController.filtro}"
+                                     />
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4 text-md-end">
+                    <h:commandButton value="Aplicar"
+                                     action="#{cancelacionesController.aplicarFiltros}"
+                                     styleClass="btn btn-primary btn-sm me-2"/>
+                    <h:commandButton value="Limpiar"
+                                     action="#{cancelacionesController.limpiarFiltros}"
+                                     styleClass="btn btn-outline-secondary btn-sm"/>
+                </div>
+
+            </div>
+
+            <!-- Tabla -->
+            <div class="card shadow tabla-cancelaciones-card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Historial de cancelaciones</h5>
+                    <small class="text-muted">
+                        Total: #{cancelacionesController.listaCancelaciones.size()}
+                    </small>
+                </div>
+
+                <div class="card-body p-0">
+                    <table class="table table-hover tabla-cancelaciones mb-0">
+                        <thead>
+                            <tr>
+                                <th>Folio</th>
+                                <th>Cliente</th>
+                                <th>Fecha</th>
+                                <th>Motivo</th>
+                                <th>Responsable</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <ui:repeat value="#{cancelacionesController.listaCancelaciones}" var="c">
+                                <tr>
+                                    <td>#{c.folio}</td>
+                                    <td>#{c.cliente}</td>
+                                    <td>#{c.fecha}</td>
+                                    <td>#{c.motivo}</td>
+                                    <td>#{c.responsable}</td>
+
+                                    <td class="text-center">
+                                        <h:commandButton value="Detalles"
+                                                         styleClass="btn btn-sm btn-outline-primary me-2"
+                                                         action="#{cancelacionesController.verDetalle(c)}"/>
+
+                                        <h:commandButton value="Reactivar"
+                                                         styleClass="btn btn-sm btn-outline-success"
+                                                         action="#{cancelacionesController.reactivarPedido(c)}"/>
+                                    </td>
+                                </tr>
+                            </ui:repeat>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+
+    </h:body>
+</html>

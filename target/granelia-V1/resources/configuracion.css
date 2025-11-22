@@ -1,0 +1,79 @@
+
+
+/* Tarjeta principal */
+.config-card {
+    border-radius: 1rem;
+    overflow: hidden;
+    border: none;
+}
+
+/* Header de la tarjeta */
+.config-card .card-header {
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+    color: #ffffff;
+    border-bottom: none;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.config-card .card-header h5 {
+    font-weight: 600;
+}
+
+.config-card .card-header small {
+    opacity: 0.9;
+}
+
+/* Avatar sencillo con inicial */
+.config-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #e3f2fd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #0d6efd;
+}
+
+.config-avatar-text {
+    line-height: 1;
+}
+
+/* Cuerpo de la tarjeta */
+.config-card .card-body {
+    padding: 1.5rem;
+}
+
+/* Footer de la tarjeta */
+.config-card .card-footer {
+    padding: 1rem 1.5rem 1.3rem 1.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Botones */
+.config-card .btn {
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Pequeña transición al hacer hover */
+.config-card .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.08);
+}
+
+/* Responsivo pequeño */
+@media (max-width: 576px) {
+    .config-card {
+        border-radius: 0.75rem;
+    }
+
+    .config-card .card-body,
+    .config-card .card-footer {
+        padding: 1rem 1.25rem;
+    }
+}

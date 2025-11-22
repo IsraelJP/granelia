@@ -1,0 +1,96 @@
+
+/* Fondo general para la página de pedidos */
+.pedidos-page {
+    background: radial-gradient(circle at top, #f0f4ff 0, #f8fafc 45%, #edf2ff 100%);
+    min-height: 100vh;
+}
+
+/* Títulos */
+.titulo-pedidos {
+    font-weight: 700;
+    color: #495057;
+}
+
+.subtitulo-pedidos {
+    font-size: 0.95rem;
+    color: #6c757d;
+}
+
+/* Tarjetas de resumen */
+.pedido-card {
+    border-radius: 0.85rem;
+    border: none;
+    background: #ffffff;
+    transition: 0.2s;
+}
+
+.pedido-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0.6rem 1.2rem rgba(0, 0, 0, 0.1);
+}
+
+/* Filtro de búsqueda */
+.filtro-busqueda .input-group-text {
+    background-color: #e9f0ff;
+    border-color: #d0ddff;
+    font-weight: 500;
+}
+
+/* Tarjeta que envuelve la tabla */
+.tabla-pedidos-card {
+    border-radius: 1rem;
+    overflow: hidden;
+    border: none;
+}
+
+.tabla-pedidos-card .card-header {
+    background: linear-gradient(90deg, #4e73df, #224abe);
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* Tabla */
+.tabla-pedidos thead {
+    background-color: #eef2ff;
+}
+
+.tabla-pedidos th {
+    color: #4e73df;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.tabla-pedidos tbody tr {
+    transition: 0.15s;
+}
+
+.tabla-pedidos tbody tr:hover {
+    background-color: #f4f6ff;
+}
+
+/* Botones en tabla */
+.tabla-pedidos .btn {
+    font-size: 0.75rem;
+    border-radius: 999px;
+}
+
+/* Puedes mapear clases de estado desde el bean:
+   p.estadoCss => "badge-estado-pendiente", etc.
+*/
+.badge-estado-pendiente {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.badge-estado-proceso {
+    background-color: #0dcaf0;
+    color: #04242b;
+}
+
+.badge-estado-completado {
+    background-color: #198754;
+}
+
+.badge-estado-cancelado {
+    background-color: #dc3545;
+}
