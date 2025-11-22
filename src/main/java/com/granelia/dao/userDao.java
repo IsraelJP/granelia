@@ -10,6 +10,8 @@ import java.sql.*;
 
 
 public class userDao {
+    
+    
 
     @Resource(lookup = "jdbc/granelia") // DataSource JTA en Payara
     private DataSource ds;

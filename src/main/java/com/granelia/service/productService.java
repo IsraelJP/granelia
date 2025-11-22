@@ -25,7 +25,7 @@ public class productService {
     
    
     public productDto crearProducto(productDto producto) throws SQLException {
-
+        System.out.println(producto.getNombre() );
         if (producto.getNombre() == null || producto.getNombre().trim().isEmpty()) {
             throw new IllegalArgumentException("El nombre es obligatorio");
         }
@@ -45,8 +45,6 @@ public class productService {
             throw new IllegalArgumentException("El peso debe ser mayor a 0");
         }
         
-        // IVA
-        producto.setPrecio_iva(producto.getPrecio() * 1.16);
         
         return dao.insert_product(producto);
     }

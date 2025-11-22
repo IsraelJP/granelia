@@ -37,12 +37,13 @@ public class productDao {
             
             while(rs.next()){
              productDto dto = new productDto();
+             dto.setId_producto(rs.getInt("id_producto"));
              dto.setNombre(rs.getString("nombre"));
              dto.setMarca(rs.getString("marca"));
              dto.setCategoria(rs.getString("categoria"));
              dto.setPeso_gramos(rs.getInt("peso_gramos"));
              dto.setPrecio(rs.getDouble("precio"));
-             dto.setPrecio_iva(rs.getDouble("precio_con_iva"));
+             dto.setPrecio_iva(rs.getDouble("precio_iva"));
              dto.setStock(rs.getInt("stock"));
              list.add(dto);
              
@@ -58,21 +59,20 @@ public class productDao {
     public productDto insert_product(productDto product) throws SQLException {
         final String sql = 
             "INSERT INTO PRODUCTOS_GRANELIA " +
-            "(ID_PRODUCTO, NOMBRE, MARCA, CATEGORIA, PESO_GRAMOS, PRECIO, PRECIO_CON_IVA, STOCK) " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            "( NOMBRE, MARCA, CATEGORIA, PESO_GRAMOS, PRECIO, PRECIO_IVA, STOCK) " +
+            "VALUES ( ?, ?, ?, ?, ?, ?, ?)";
         
         try (Connection cn = ds.getConnection();
              PreparedStatement ps = cn.prepareStatement(sql)) {
             
             
-            ps.setInt(1, product.getId_producto());
-            ps.setString(2, product.getNombre());
-            ps.setString(3, product.getMarca());
-            ps.setString(4, product.getCategoria());
-            ps.setInt(5, product.getPeso_gramos());
-            ps.setDouble(6, product.getPrecio());
-            ps.setDouble(7, product.getPrecio_iva());
-            ps.setInt(8, product.getStock());
+            ps.setString(1, product.getNombre());
+            ps.setString(2, product.getMarca());
+            ps.setString(3, product.getCategoria());
+            ps.setInt(4, product.getPeso_gramos());
+            ps.setDouble(5, product.getPrecio());
+            ps.setDouble(6, product.getPrecio_iva());
+            ps.setInt(7, product.getStock());
             
             int rows = ps.executeUpdate();
             

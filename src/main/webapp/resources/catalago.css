@@ -1,0 +1,23 @@
+
+
+/* Botones de la barra principal */
+.btn-crud {
+    min-width: 160px;
+}
+
+/* Mensajes de JSF */
+#formProducts\\:msgs {
+    font-size: 0.9rem;
+}
+
+/* Tabla */
+table.table {
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+/* Acciones por fila */
+table.table td .btn {
+    font-size: 0.8rem;
+    padding: 0.15rem 0.5rem;
+}
