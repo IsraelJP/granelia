@@ -5,7 +5,7 @@
       xmlns:ui="jakarta.faces.facelets">
 
     <h:head>
-        <title>GRANELIA - Productos Test</title>
+        <title>GRANELIA</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
               rel="stylesheet"/>
@@ -17,7 +17,7 @@
 
         <main class="container my-4 flex-fill">
 
-            <h1 class="h3 mb-4">Productos (Test)</h1>
+            <h1 class="h3 mb-4">Productos </h1>
 
             <h:form id="formProducts" class="mb-3">
 
@@ -36,14 +36,7 @@
                                      action="#{products.crearProducto}">
                         <f:ajax execute="@form" render="tabla msgs nuevoProducto"/>
                     </h:commandButton>
-
-
-                    <!-- Actualizar producto seleccionado -->
-                    <h:commandButton value="Actualizar seleccionado"
-                                     styleClass="btn btn-warning btn-crud"
-                                     action="{proaducts.actualizar}">
-                        <f:ajax render="tabla msg"/>
-                    </h:commandButton>
+                    
 
                     
                 </div>
@@ -97,56 +90,67 @@
 
 
                 <!-- Tabla de productos -->
-                <h:panelGroup id="tabla">
-                    <table class="table table-striped table-hover mt-3 align-middle">
-                        <thead class="table-light">
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Categoría</th>
-                                <th>Peso (g)</th>
-                                <th>Precio</th>
-                                <th>Precio con IVA</th>
-                                <th>Stock</th>
-                                <th class="text-center">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <ui:repeat value="#{products.catalogo()}" var="u">
-                                <tr>
-                                    <td>#{u.id_producto}</td>
-                                    <td>#{u.nombre}</td>
-                                    <td>#{u.categoria}</td>
-                                    <td>#{u.peso_gramos}</td>
-                                    <td>$ #{u.precio}</td>
-                                    <td>$ #{u.precio_iva}</td>
-                                    <td>#{u.stock}</td>
-                                    <td class="text-center">
-                                        <!-- Seleccionar para edición -->
-                                        <h:commandButton value="Editar"
-                                                         styleClass="btn btn-sm btn-outline-warning me-1"
-                                                         action="{products.prepararEdicion}">
-                                            <!-- aquí copiamos u -> productoActual -->
-                                            <f:setPropertyActionListener target="#{products.productoActual}"
-                                                                         value="#{u}"/>
-                                            <f:ajax render="nuevoProducto msgs"/>
-                                        </h:commandButton>
+               <h:panelGroup id="tabla">
+    <div class="row row-cols-1 row-cols-md-3 g-4 mt-3">
+        <ui:repeat value="#{products.catalogo()}" var="u">
 
-                                        <!-- Marcar eliminar (si quieres seleccionar también para eliminar) -->
-                                        <h:commandButton value="Marcar eliminar"
-                                                         styleClass="btn btn-sm btn-outline-danger"
-                                                         action="#{products.marcarEliminar}">
-                                            <f:setPropertyActionListener target="#{products.productoActual}" value="#{u}"/>
-                                        </h:commandButton>
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+
+                    <!-- Imagen del producto -->
+                    <h:graphicImage value="{u.imagenUrl}"
+                                    styleClass="card-img-top"
+                                    rendered="{not empty u.imagenUrl}" />
+
+                    <!-- Si no hay imagen, puedes mostrar una de relleno -->
 
 
-                                    </td>
-                                </tr>
-                            </ui:repeat>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            #{u.nombre}
+                        </h5>
 
-                        </tbody>
-                    </table>
-                </h:panelGroup>
+                        <p class="card-text mb-2">
+                            <span class="badge bg-secondary">
+                                #{u.categoria}
+                            </span>
+                        </p>
+
+                        <ul class="list-unstyled mb-3 small">
+                            <li><strong>ID:</strong> #{u.id_producto}</li>
+                            <li><strong>Peso:</strong> #{u.peso_gramos} g</li>
+                            <li><strong>Precio:</strong> $ #{u.precio}</li>
+                            <li><strong>Precio con IVA:</strong> $ #{u.precio_iva}</li>
+                            <li><strong>Stock:</strong> #{u.stock}</li>
+                        </ul>
+
+                        <div class="d-flex justify-content-end">
+                            <!-- Botón Editar -->
+                            <h:commandButton value="Editar"
+                                             styleClass="btn btn-sm btn-outline-warning me-2"
+                                             action="{products.prepararEdicion}">
+                                <f:setPropertyActionListener target="#{products.productoActual}"
+                                                             value="#{u}"/>
+                                <f:ajax render="nuevoProducto msgs"/>
+                            </h:commandButton>
+
+                            <!-- Botón Marcar eliminar -->
+                            <h:commandButton value="Marcar eliminar"
+                                             styleClass="btn btn-sm btn-outline-danger"
+                                             action="#{products.marcarEliminar}">
+                                <f:setPropertyActionListener target="#{products.productoActual}"
+                                                             value="#{u}"/>
+                                <f:ajax render="tabla msgs"/>
+                            </h:commandButton>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </ui:repeat>
+    </div>
+</h:panelGroup>
+
 
             </h:form>
         </main>
