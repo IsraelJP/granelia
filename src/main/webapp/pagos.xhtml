@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="jakarta.faces.facelets">
+
+    <h:head>
+        <title>Pagos - GRANELIA</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet"/>
+        <h:outputStylesheet name="global.css"/>
+        <style>
+            .card-pago { transition: transform 0.2s, box-shadow 0.2s; }
+            .card-pago:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+            .estado-badge { font-size: 0.85rem; padding: 0.4em 0.8em; }
+            .form-section { background: linear-gradient(135deg, #fff9e6 0%, #fff 100%); border-left: 4px solid #f5a623; }
+            .instrucciones { background-color: #f8f9fa; border-radius: 10px; }
+            .paso-numero { width: 28px; height: 28px; background-color: #f5a623; color: white; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; }
+        </style>
+    </h:head>
+
+    <h:body class="d-flex flex-column min-vh-100 bg-light">
+
+        <main class="container my-4 flex-fill">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="h3 mb-0">
+                    <i class="bi bi-credit-card me-2"></i>Validación de Pagos
+                </h1>
+            </div>
+
+            <h:form id="formPagos">
+
+                <div class="row g-4">
+                    <!-- Columna Izquierda: Formulario de Registro -->
+                    <div class="col-lg-5">
+                        
+                        <!-- Card de Instrucciones -->
+                        <div class="card mb-4 border-0 shadow-sm instrucciones">
+                            <div class="card-body">
+                               <h5 class="card-title mb-3">
+                                <i class="bi bi-info-circle me-2 text-primary"></i>Ingresa los datos de la transacción
+                                </h5>
+                            </div>
+                        </div>
+
+                        <!-- Formulario de Nuevo Pago -->
+                        <div class="card border-0 shadow-sm form-section">
+                            <div class="card-body">
+                                <h5 class="card-title mb-4">
+                                    <i class="bi bi-plus-circle me-2"></i>Registrar Transacción
+                                </h5>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">
+                                        Número de Transacción <span class="text-danger">*</span>
+                                    </label>
+                                    <h:inputText value="#{pagos.numeroTransaccion}"
+                                                 styleClass="form-control"
+                                                 placeholder="Ej. TXN12345678"/>
+                                    <small class="text-muted">Número proporcionado por tu banco</small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">
+                                        Monto del Pago <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">$</span>
+                                        <h:inputText value="#{pagos.monto}"
+                                                     styleClass="form-control"
+                                                     placeholder="0.00"/>
+                                    </div>
+                                    <small class="text-muted">Debe coincidir con el monto transferido</small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">
+                                        Fecha del Pago <span class="text-danger">*</span>
+                                    </label>
+                                    <h:inputText value="#{pagos.fechaPago}"
+                                                 styleClass="form-control"
+                                                 type="date"/>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold">
+                                        Titular de la Cuenta <span class="text-danger">*</span>
+                                    </label>
+                                    <h:inputText value="#{pagos.titular}"
+                                                 styleClass="form-control"
+                                                 placeholder="Nombre del titular"/>
+                                    <small class="text-muted">Nombre como aparece en la cuenta bancaria</small>
+                                </div>
+
+                                <h:commandButton value="Registrar Transacción"
+                                                 styleClass="btn btn-warning w-100 fw-semibold py-2"
+                                                 action="#{pagos.registrarPago}">
+                                    <f:ajax execute="@form" render="@form"/>
+                                </h:commandButton>
+                                
+                                <div class="text-center mt-3">
+                                    <small class="text-muted">
+                                        <i class="bi bi-shield-check me-1"></i>
+                                        El estado será validado automáticamente con el banco
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Columna Derecha: Lista y Acciones -->
+                    <div class="col-lg-7">
+                        
+                        <!-- Barra de Acciones -->
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-body">
+                                <div class="row g-2 align-items-end">
+                                    <div class="col-md-4">
+                                        <label class="form-label small fw-semibold">Buscar Transacción</label>
+                                        <h:inputText value="#{pagos.terminoBusqueda}"
+                                                     styleClass="form-control"
+                                                     placeholder="TXN..."/>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label small fw-semibold">Filtrar por Estado</label>
+                                        <h:selectOneMenu value="#{pagos.filtroEstado}" styleClass="form-select">
+                                            <f:selectItem itemValue="TODOS" itemLabel="Todos"/>
+                                            <f:selectItem itemValue="PENDIENTE" itemLabel="Pendientes"/>
+                                            <f:selectItem itemValue="VALIDADO" itemLabel="Validados"/>
+                                            <f:selectItem itemValue="RECHAZADO" itemLabel="Rechazados"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="btn-group w-100">
+                                            <h:commandButton value="Buscar"
+                                                            styleClass="btn btn-outline-primary"
+                                                            action="#{pagos.buscarPago}">
+                                               <f:ajax execute="@form" render="@form"/>
+                                           </h:commandButton>
+
+                                           <h:commandButton value="Filtrar"
+                                                            styleClass="btn btn-outline-secondary"
+                                                            action="#{pagos.filtrarPorEstado}">
+                                               <f:ajax execute="@form" render="@form"/>
+                                           </h:commandButton>
+
+                                           <h:commandButton value="Cargar"
+                                                            styleClass="btn btn-primary"
+                                                            action="#{pagos.cargarLista}">
+                                               <f:ajax execute="@form" render="@form"/>
+                                           </h:commandButton>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h:messages id="msgs" styleClass="alert alert-info" rendered="#{not empty facesContext.messageList}"/>
+
+                        <!-- Lista de Pagos -->
+                        <h:panelGroup id="tablaPagos">
+                            <div class="row g-3">
+                                <ui:repeat value="#{pagos.list}" var="p">
+                                    <div class="col-12">
+                                        <div class="card border-0 shadow-sm card-pago">
+                                            <div class="card-body">
+                                                <div class="row align-items-center">
+                                                    <div class="col-md-5">
+                                                        <div class="d-flex align-items-center mb-2">
+                                                            <i class="bi bi-hash fs-4 text-muted me-2"></i>
+                                                            <div>
+                                                                <small class="text-muted d-block">Transacción</small>
+                                                                <strong class="fs-6">#{p.numero_transaccion}</strong>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex align-items-center">
+                                                            <i class="bi bi-person fs-5 text-muted me-2"></i>
+                                                            <small>#{p.titular}</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 text-center">
+                                                        <small class="text-muted d-block">Monto</small>
+                                                        <span class="fs-4 fw-bold text-success">$#{p.monto}</span>
+                                                        <small class="text-muted d-block mt-1">
+                                                            <i class="bi bi-calendar me-1"></i>#{p.fecha_pago}
+                                                        </small>
+                                                    </div>
+                                                    <div class="col-md-3 text-end">
+                                                        <span class="badge estado-badge #{pagos.getEstadoClass(p.estado)} mb-2">
+                                                            #{p.estado}
+                                                        </span>
+                                                        <div>
+                                                            <h:commandButton value="Eliminar"
+                                                                             styleClass="btn btn-sm btn-outline-danger"
+                                                                             action="#{pagos.eliminarPago}">
+                                                                <f:setPropertyActionListener target="#{pagos.pagoActual}" value="#{p}"/>
+                                                                <f:ajax execute="@form" render="tablaPagos msgs"/>
+                                                            </h:commandButton>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ui:repeat>
+                            </div>
+
+                            <!-- Mensaje si no hay pagos -->
+                            <h:panelGroup rendered="#{empty pagos.list}">
+                                <div class="text-center py-5 text-muted">
+                                    <i class="bi bi-inbox fs-1 d-block mb-3"></i>
+                                    <p>No hay pagos registrados</p>
+                                    <p class="small">Haz clic en "Cargar" para ver los pagos existentes</p>
+                                </div>
+                            </h:panelGroup>
+                        </h:panelGroup>
+
+                    </div>
+                </div>
+
+            </h:form>
+        </main>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    </h:body>
+</html>
