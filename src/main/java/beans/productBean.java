@@ -9,6 +9,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.servlet.http.Part;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.nio.file.Files;
@@ -91,46 +92,6 @@ public class productBean implements Serializable {
         return list;
     }
 
-   // REEMPLAZA EL MÉTODO subirImagen en tu productBean.java con este:
-
-    private String subirImagen(Part archivo) {
-        if (archivo == null || archivo.getSize() == 0) {
-            return "default-product.png";
-        }
-
-        try {
-            String fileName = archivo.getSubmittedFileName();
-            String extension = fileName.substring(fileName.lastIndexOf("."));
-            String nuevoNombre = UUID.randomUUID().toString() + extension;
-
-            // Obtener la ruta real del servidor
-            String uploadPath = FacesContext.getCurrentInstance()
-                    .getExternalContext()
-                    .getRealPath("/resources/images");
-
-            System.out.println("📁 Ruta de subida: " + uploadPath);
-
-            File uploadDir = new File(uploadPath);
-            if (!uploadDir.exists()) {
-                boolean created = uploadDir.mkdirs();
-                System.out.println("📁 Carpeta creada: " + created);
-            }
-
-            File file = new File(uploadDir, nuevoNombre);
-
-            try (InputStream input = archivo.getInputStream()) {
-                Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
-            }
-
-            System.out.println("✅ Imagen guardada: " + nuevoNombre);
-            return nuevoNombre;
-
-        } catch (Exception e) {
-            System.err.println("❌ Error al subir imagen: " + e.getMessage());
-            e.printStackTrace();
-            return "default-product.png";
-        }
-}
 
     public void crearProducto() {
         try {
@@ -144,10 +105,17 @@ public class productBean implements Serializable {
             nuevo.setPrecio_iva(precioConIva);
             nuevo.setStock(stock);
             
-            // NUEVO: Subir imagen
-            String nombreImagen = subirImagen(file);
-            nuevo.setImagen(nombreImagen);
+            if (file != null) {
+                try (InputStream is = file.getInputStream()) {
+                    nuevo.setImagenBytes(is.readAllBytes());
+                    System.out.println(is.readAllBytes());
+                    nuevo.setImagenContentType(file.getContentType());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             
+   
             ser.crearProducto(nuevo);
             cargarLista();
             limpiarFormulario();
@@ -175,31 +143,6 @@ public class productBean implements Serializable {
         imagenNombre = null;
     }
 
-    public String actualizarProducto() {
-        try {
-            // NUEVO: Si hay nueva imagen, subirla
-            if (file != null && file.getSize() > 0) {
-                String nombreImagen = subirImagen(file);
-                productoActual.setImagen(nombreImagen);
-            }
-            
-            boolean actualizado = ser.actualizarProducto(productoActual);
-            if (actualizado) {
-                FacesContext.getCurrentInstance().addMessage(null, 
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Producto actualizado", null));
-                productoActual = new productDto();
-                return "catalogo?faces-redirect=true";
-            } else {
-                FacesContext.getCurrentInstance().addMessage(null, 
-                    new FacesMessage(FacesMessage.SEVERITY_WARN, "No se pudo actualizar", null));
-                return null;
-            }
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, 
-                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: " + e.getMessage(), null));
-            return null;
-        }
-    }
 
     public void eliminarProducto() {
         try {
@@ -220,20 +163,6 @@ public class productBean implements Serializable {
         }
     }
 
-    public void buscarProductos() {
-        try {
-            if (terminoBusqueda == null || terminoBusqueda.trim().isEmpty()) {
-                cargarLista();
-            } else {
-                list = ser.buscarProductos(terminoBusqueda);
-                FacesContext.getCurrentInstance().addMessage(null, 
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Encontrados: " + list.size() + " productos", null));
-            }
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, 
-                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: " + e.getMessage(), null));
-        }
-    }
 
     /**
         * Prepara el producto para editar y navega a la página de edición

@@ -49,23 +49,7 @@ public class productService {
         return dao.insert_product(producto);
     }
     
-    public List<productDto> buscarProductos(String termino) throws SQLException {
-        if (termino == null || termino.trim().isEmpty()) {
-            return catalogo();
-        }
-        return (List<productDto>) dao.buscar_product(termino);
-    }
-    
-    public boolean actualizarProducto(productDto producto) throws SQLException {
-        if (producto.getId_producto() == 0) {
-            throw new IllegalArgumentException("ID no puede ser 0");
-        }
-        
-        // Recalcular IVA
-        producto.setPrecio_iva(producto.getPrecio() * 1.16);
-        
-        return dao.actualizar_product(producto);
-    }
+  
     
     public boolean eliminarProcusto(int id)throws SQLException{
         return dao.eliminar(id);

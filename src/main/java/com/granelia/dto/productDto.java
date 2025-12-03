@@ -1,5 +1,7 @@
 package com.granelia.dto;
 
+import jakarta.servlet.http.Part;
+
 public class productDto {
     private int id_producto;
     private String nombre;
@@ -9,18 +11,28 @@ public class productDto {
     private double precio;
     private double precio_iva;
     private int stock;
-    private String desc;
-    private String imagen; // NUEVO CAMPO
+    private byte[] imagenBytes;
+    private String imagenContentType;
+
+    public byte[] getImagenBytes() {
+        return imagenBytes;
+    }
+
+    public void setImagenBytes(byte[] imagenBytes) {
+        this.imagenBytes = imagenBytes;
+    }
+
+    public String getImagenContentType() {
+        return imagenContentType;
+    }
+
+    public void setImagenContentType(String imagenContentType) {
+        this.imagenContentType = imagenContentType;
+    }
+
 
     // Getters y Setters existentes...
     
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
 
     public int getId_producto() {
         return id_producto;
@@ -86,12 +98,6 @@ public class productDto {
         this.stock = stock;
     }
 
-    // NUEVO: Getter y Setter para imagen
-    public String getImagen() {
-        return imagen;
-    }
 
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
-    }
+
 }
