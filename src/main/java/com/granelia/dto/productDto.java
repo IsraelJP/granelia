@@ -1,15 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.granelia.dto;
 
-/**
- *
- * @author israel
- */
 public class productDto {
-      
     private int id_producto;
     private String nombre;
     private String marca;
@@ -19,7 +10,10 @@ public class productDto {
     private double precio_iva;
     private int stock;
     private String desc;
+    private String imagen; // NUEVO CAMPO
 
+    // Getters y Setters existentes...
+    
     public String getDesc() {
         return desc;
     }
@@ -27,7 +21,6 @@ public class productDto {
     public void setDesc(String desc) {
         this.desc = desc;
     }
-    
 
     public int getId_producto() {
         return id_producto;
@@ -92,9 +85,13 @@ public class productDto {
     public void setStock(int stock) {
         this.stock = stock;
     }
-    
-    
-    
-    
-    
+
+    // NUEVO: Getter y Setter para imagen
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
 }
