@@ -41,6 +41,17 @@ public class productBean implements Serializable {
     private Part file;
     private String imagenNombre;
     
+    // NUEVO: Para el modal de edición
+    private Part fileEditar;
+    
+    public Part getFileEditar() {
+        return fileEditar;
+    }
+
+    public void setFileEditar(Part fileEditar) {
+        this.fileEditar = fileEditar;
+    }
+    
     // NUEVO: Getters y Setters para file
     public Part getFile() {
         return file;
@@ -165,20 +176,84 @@ public class productBean implements Serializable {
 
 
     /**
-        * Prepara el producto para editar y navega a la página de edición
+        * Prepara el producto para editar - CREA UNA COPIA COMPLETA
         */
-       public String prepararEditar(productDto producto) {
-           this.productoActual = producto;
-           return "editarProducto?faces-redirect=true";
-       }
+    public void prepararEditar(productDto producto) {
+        // Crear una copia del producto para editar
+        this.productoActual = new productDto();
+        this.productoActual.setId_producto(producto.getId_producto());
+        this.productoActual.setNombre(producto.getNombre());
+        this.productoActual.setMarca(producto.getMarca());
+        this.productoActual.setCategoria(producto.getCategoria());
+        this.productoActual.setPeso_gramos(producto.getPeso_gramos());
+        this.productoActual.setPrecio(producto.getPrecio());
+        this.productoActual.setPrecio_iva(producto.getPrecio_iva());
+        this.productoActual.setStock(producto.getStock());
+        this.productoActual.setImagenBytes(producto.getImagenBytes());
+        this.productoActual.setImagenContentType(producto.getImagenContentType());
+        
+        System.out.println("✅ Producto preparado para editar - ID: " + this.productoActual.getId_producto());
+    }
 
-       /**
+    /**
         * Prepara el producto para eliminar y navega a la página de confirmación
         */
-       public String prepararEliminar(productDto producto) {
-           this.productoActual = producto;
-           return "eliminarProducto?faces-redirect=true";
-       }
+    public String prepararEliminar(productDto producto) {
+        this.productoActual = producto;
+        return "eliminarProducto?faces-redirect=true";
+    }
+/**
+ * NUEVO MÉTODO: Actualizar producto existente - Recarga automáticamente
+ */
+    public void actualizarProducto() {
+        try {
+            System.out.println("🔄 Actualizando producto ID: " + productoActual.getId_producto());
+            System.out.println("📝 Nombre: " + productoActual.getNombre());
+            System.out.println("💰 Precio: " + productoActual.getPrecio());
+
+            // Calcular precio con IVA
+            double precioConIva = productoActual.getPrecio() * 1.16;
+            productoActual.setPrecio_iva(precioConIva);
+
+            // Si hay una nueva imagen, procesarla
+            if (fileEditar != null && fileEditar.getSize() > 0) {
+                try (InputStream is = fileEditar.getInputStream()) {
+                    byte[] bytes = is.readAllBytes();
+                    productoActual.setImagenBytes(bytes);
+                    productoActual.setImagenContentType(fileEditar.getContentType());
+                    System.out.println("📸 Nueva imagen agregada (" + bytes.length + " bytes)");
+                } catch (IOException e) {
+                    System.err.println("❌ Error al procesar imagen: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("ℹ️ Sin cambio de imagen");
+            }
+
+            // Actualizar en la base de datos
+            ser.actualizarProducto(productoActual);
+
+            // IMPORTANTE: Recargar la lista DESPUÉS de actualizar
+            list = ser.catalogo();
+
+            // Limpiar el file de edición
+            fileEditar = null;
+
+            System.out.println("✅ Producto actualizado y lista recargada");
+
+            FacesContext.getCurrentInstance().addMessage(null, 
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "✅ Producto actualizado exitosamente", null));
+        } catch (IllegalArgumentException e) {
+            FacesContext.getCurrentInstance().addMessage(null, 
+                new FacesMessage(FacesMessage.SEVERITY_WARN, e.getMessage(), null));
+        } catch (Exception e) {
+            System.err.println("❌ Error completo al actualizar: " + e.getMessage());
+            e.printStackTrace();
+            FacesContext.getCurrentInstance().addMessage(null, 
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al actualizar: " + e.getMessage(), null));
+        }
+    }
+       
     public productService getSer() {
         return ser;
     }

@@ -7,6 +7,75 @@
     <h:head>
         <title>Catálogo de Productos</title>
          <h:outputStylesheet name="catalago.css"/>
+         <style>
+            /* Estilos para el modal */
+            .modal-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.7);
+                z-index: 1000;
+                justify-content: center;
+                align-items: center;
+            }
+            
+            .modal-overlay.active {
+                display: flex;
+            }
+            
+            .modal-content {
+                background: white;
+                padding: 30px;
+                border-radius: 10px;
+                max-width: 600px;
+                width: 90%;
+                max-height: 90vh;
+                overflow-y: auto;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            }
+            
+            .modal-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                border-bottom: 2px solid #4CAF50;
+                padding-bottom: 10px;
+            }
+            
+            .modal-close {
+                cursor: pointer;
+                font-size: 28px;
+                color: #999;
+                background: none;
+                border: none;
+                padding: 0;
+                width: 30px;
+                height: 30px;
+            }
+            
+            .modal-close:hover {
+                color: #333;
+            }
+            
+            .readonly-input {
+                background-color: #f0f0f0;
+                cursor: not-allowed;
+            }
+        </style>
+        <script type="text/javascript">
+            function abrirModal() {
+                document.getElementById('modalEditar').classList.add('active');
+            }
+            
+            function cerrarModal() {
+                document.getElementById('modalEditar').classList.remove('active');
+                return false;
+            }
+        </script>
     </h:head>
     
     <h:body>
@@ -125,11 +194,14 @@
                         <h:column>
                             <f:facet name="header">Acciones</f:facet>
                             
-                            <h:commandButton value="Editar" 
+                            <h:commandButton value="✏️ Editar" 
                                              action="#{products.prepararEditar(u)}"
-                                             styleClass="btn btn-warning" />
+                                             onclick="setTimeout(function(){abrirModal();}, 100);"
+                                             styleClass="btn btn-warning">
+                                <f:ajax execute="@this" render=":formEditar" />
+                            </h:commandButton>
                             
-                            <h:commandButton value="Eliminar" 
+                            <h:commandButton value="🗑️ Eliminar" 
                                              action="#{products.eliminarProducto()}"
                                              onclick="return confirm('⚠️ ¿Está seguro de eliminar el producto: #{u.nombre}?\n\nEsta acción no se puede deshacer.');"
                                              styleClass="btn btn-danger">
@@ -144,6 +216,88 @@
                         </p>
                     </h:panelGroup>
                 </h:form>
+            </div>
+            
+           
+           <!-- MODAL PARA EDITAR -->
+            <div id="modalEditar" class="modal-overlay">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>✏️ Editar Producto</h2>
+                        <button class="modal-close" onclick="cerrarModal(); return false;" type="button">×</button>
+                    </div>
+
+                    <h:form id="formEditar" enctype="multipart/form-data">
+                        <h:messages styleClass="alert alert-error" />
+
+                        <div class="form-group">
+                            <label>ID:</label>
+                            <h:outputText value="#{products.productoActual.id_producto}" 
+                                         style="display: block; padding: 8px; background-color: #f0f0f0; border: 1px solid #ddd; border-radius: 4px;" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Nombre: *</label>
+                            <h:inputText value="#{products.productoActual.nombre}" 
+                                         style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Marca: *</label>
+                            <h:inputText value="#{products.productoActual.marca}" 
+                                         style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Categoría: *</label>
+                            <h:inputText value="#{products.productoActual.categoria}" 
+                                         style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Peso (gramos): *</label>
+                            <h:inputText value="#{products.productoActual.peso_gramos}" 
+                                         style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Precio: *</label>
+                            <h:inputText value="#{products.productoActual.precio}" 
+                                         style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Stock: *</label>
+                            <h:inputText value="#{products.productoActual.stock}" 
+                                         style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Nueva Imagen (opcional):</label>
+                            <h:inputFile value="#{products.fileEditar}" 
+                                         accept="image/*" 
+                                         style="width: 100%;" />
+                            <small style="color: #999;">Deja vacío si no quieres cambiar la imagen</small>
+                        </div>
+
+                        <div style="display: flex; gap: 10px; margin-top: 20px;">
+                            <h:commandButton value="💾 Guardar Cambios" 
+                                             action="#{products.actualizarProducto()}" 
+                                             styleClass="btn btn-success" 
+                                             style="flex: 1;">
+                                <f:ajax execute="@form" render=":formLista :formCrear" 
+                                        oncomplete="cerrarModal();" />
+                            </h:commandButton>
+
+                            <h:commandButton value="❌ Cancelar" 
+                                             type="button"
+                                             onclick="cerrarModal(); return false;"
+                                             styleClass="btn btn-secondary" 
+                                             style="flex: 1;" 
+                                             immediate="true" />
+                        </div>
+                    </h:form>
+                </div>
             </div>
         </f:view>
     </h:body>
