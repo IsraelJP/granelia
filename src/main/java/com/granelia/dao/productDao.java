@@ -20,7 +20,7 @@ public class productDao {
 
     public List<productDto> catalogo() {
         List<productDto> list = new ArrayList<>();
-        String sql = "SELECT * FROM PRODUCTOS_GRANELIA";
+        String sql = " SELECT * FROM PRODUCTOS_GRANELIA ORDER BY id_producto ASC";
 
         try (Connection cn = ds.getConnection();
              Statement ps = cn.createStatement();

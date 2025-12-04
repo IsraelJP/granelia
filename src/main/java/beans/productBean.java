@@ -203,57 +203,116 @@ public class productBean implements Serializable {
         return "eliminarProducto?faces-redirect=true";
     }
 /**
- * NUEVO MÉTODO: Actualizar producto existente - Recarga automáticamente
+ * NUEVO MÉTODO: Actualizar producto existente - Recarga lista con imágenes
  */
-    public void actualizarProducto() {
-        try {
-            System.out.println("🔄 Actualizando producto ID: " + productoActual.getId_producto());
-            System.out.println("📝 Nombre: " + productoActual.getNombre());
-            System.out.println("💰 Precio: " + productoActual.getPrecio());
-
-            // Calcular precio con IVA
-            double precioConIva = productoActual.getPrecio() * 1.16;
-            productoActual.setPrecio_iva(precioConIva);
-
-            // Si hay una nueva imagen, procesarla
-            if (fileEditar != null && fileEditar.getSize() > 0) {
-                try (InputStream is = fileEditar.getInputStream()) {
-                    byte[] bytes = is.readAllBytes();
-                    productoActual.setImagenBytes(bytes);
-                    productoActual.setImagenContentType(fileEditar.getContentType());
-                    System.out.println("📸 Nueva imagen agregada (" + bytes.length + " bytes)");
-                } catch (IOException e) {
-                    System.err.println("❌ Error al procesar imagen: " + e.getMessage());
-                    e.printStackTrace();
-                }
-            } else {
-                System.out.println("ℹ️ Sin cambio de imagen");
+public void actualizarProducto() {
+    try {
+        System.out.println("🔄 Actualizando producto ID: " + productoActual.getId_producto());
+        System.out.println("📝 Nombre: " + productoActual.getNombre());
+        System.out.println("💰 Precio: " + productoActual.getPrecio());
+        
+        // Calcular precio con IVA
+        double precioConIva = productoActual.getPrecio() * 1.16;
+        productoActual.setPrecio_iva(precioConIva);
+           
+        // Si hay una nueva imagen, procesarla
+        if (fileEditar != null && fileEditar.getSize() > 0) {
+            try (InputStream is = fileEditar.getInputStream()) {
+                byte[] bytes = is.readAllBytes();
+                productoActual.setImagenBytes(bytes);
+                productoActual.setImagenContentType(fileEditar.getContentType());
+                System.out.println("📸 Nueva imagen agregada (" + bytes.length + " bytes)");
+            } catch (IOException e) {
+                System.err.println("❌ Error al procesar imagen: " + e.getMessage());
+                e.printStackTrace();
             }
-
-            // Actualizar en la base de datos
-            ser.actualizarProducto(productoActual);
-
-            // IMPORTANTE: Recargar la lista DESPUÉS de actualizar
-            list = ser.catalogo();
-
-            // Limpiar el file de edición
-            fileEditar = null;
-
-            System.out.println("✅ Producto actualizado y lista recargada");
-
-            FacesContext.getCurrentInstance().addMessage(null, 
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "✅ Producto actualizado exitosamente", null));
-        } catch (IllegalArgumentException e) {
-            FacesContext.getCurrentInstance().addMessage(null, 
-                new FacesMessage(FacesMessage.SEVERITY_WARN, e.getMessage(), null));
-        } catch (Exception e) {
-            System.err.println("❌ Error completo al actualizar: " + e.getMessage());
-            e.printStackTrace();
-            FacesContext.getCurrentInstance().addMessage(null, 
-                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al actualizar: " + e.getMessage(), null));
+        } else {
+            System.out.println("ℹ️ Sin cambio de imagen");
         }
+           
+        // Actualizar en la base de datos
+        ser.actualizarProducto(productoActual);
+           
+        // IMPORTANTE: Recargar COMPLETAMENTE la lista desde la BD para obtener TODO incluidas las imágenes
+        list = null; // Limpiar lista actual
+        list = ser.catalogo(); // Recargar desde base de datos con TODAS las imágenes
+           
+        // Limpiar el file de edición
+        fileEditar = null;
+        
+        // Limpiar el productoActual para evitar problemas
+        productoActual = new productDto();
+           
+        System.out.println("✅ Producto actualizado, lista recargada con " + (list != null ? list.size() : 0) + " productos");
+        
+        FacesContext.getCurrentInstance().addMessage(null, 
+            new FacesMessage(FacesMessage.SEVERITY_INFO, "✅ Producto actualizado exitosamente", null));
+            
+    } catch (IllegalArgumentException e) {
+        System.err.println("⚠️ Validación fallida: " + e.getMessage());
+        FacesContext.getCurrentInstance().addMessage(null, 
+            new FacesMessage(FacesMessage.SEVERITY_WARN, e.getMessage(), null));
+    } catch (Exception e) {
+        System.err.println("❌ Error completo al actualizar: " + e.getMessage());
+        e.printStackTrace();
+        FacesContext.getCurrentInstance().addMessage(null, 
+            new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al actualizar: " + e.getMessage(), null));
     }
-       
+}
+
+
+/**
+ * Actualizar producto y retornar a la misma página (recarga completa)
+ */
+public String actualizarProductoYCerrar() {
+    try {
+        System.out.println("🔄 Actualizando producto ID: " + productoActual.getId_producto());
+        
+        // Calcular precio con IVA
+        double precioConIva = productoActual.getPrecio() * 1.16;
+        productoActual.setPrecio_iva(precioConIva);
+           
+        // Si hay una nueva imagen, procesarla
+        if (fileEditar != null && fileEditar.getSize() > 0) {
+            try (InputStream is = fileEditar.getInputStream()) {
+                byte[] bytes = is.readAllBytes();
+                productoActual.setImagenBytes(bytes);
+                productoActual.setImagenContentType(fileEditar.getContentType());
+                System.out.println("📸 Nueva imagen agregada (" + bytes.length + " bytes)");
+            } catch (IOException e) {
+                System.err.println("❌ Error al procesar imagen: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+           
+        // Actualizar en la base de datos
+        ser.actualizarProducto(productoActual);
+           
+        // Limpiar
+        fileEditar = null;
+        productoActual = new productDto();
+           
+        System.out.println("✅ Producto actualizado exitosamente");
+        
+        FacesContext.getCurrentInstance().addMessage(null, 
+            new FacesMessage(FacesMessage.SEVERITY_INFO, "✅ Producto actualizado exitosamente", null));
+        
+        // Redirigir a la misma página para forzar recarga completa
+        return "catalogo?faces-redirect=true";
+            
+    } catch (IllegalArgumentException e) {
+        FacesContext.getCurrentInstance().addMessage(null, 
+            new FacesMessage(FacesMessage.SEVERITY_WARN, e.getMessage(), null));
+        return null;
+    } catch (Exception e) {
+        System.err.println("❌ Error al actualizar: " + e.getMessage());
+        e.printStackTrace();
+        FacesContext.getCurrentInstance().addMessage(null, 
+            new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al actualizar: " + e.getMessage(), null));
+        return null;
+    }
+}
+    
     public productService getSer() {
         return ser;
     }

@@ -231,7 +231,7 @@
                         <h:messages styleClass="alert alert-error" />
 
                         <div class="form-group">
-                            <label>ID:</label>
+                            <label>ID: (No editable)</label>
                             <h:outputText value="#{products.productoActual.id_producto}" 
                                          style="display: block; padding: 8px; background-color: #f0f0f0; border: 1px solid #ddd; border-radius: 4px;" />
                         </div>
@@ -282,12 +282,9 @@
 
                         <div style="display: flex; gap: 10px; margin-top: 20px;">
                             <h:commandButton value="💾 Guardar Cambios" 
-                                             action="#{products.actualizarProducto()}" 
+                                             action="#{products.actualizarProductoYCerrar()}" 
                                              styleClass="btn btn-success" 
-                                             style="flex: 1;">
-                                <f:ajax execute="@form" render=":formLista :formCrear" 
-                                        oncomplete="cerrarModal();" />
-                            </h:commandButton>
+                                             style="flex: 1;" />
 
                             <h:commandButton value="❌ Cancelar" 
                                              type="button"
